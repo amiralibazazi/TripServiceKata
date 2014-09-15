@@ -22,9 +22,9 @@ public class TripServiceShould {
 
     @Before
     public void initialise() {
+        loggedUser = new User();
         userWithNoFriends = new User();
         someUser = new User();
-        loggedUser = new User();
         tripService = new TestableTripService();
     }
 
