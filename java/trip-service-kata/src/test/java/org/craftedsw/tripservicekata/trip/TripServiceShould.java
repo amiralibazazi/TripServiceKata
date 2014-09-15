@@ -28,20 +28,23 @@ public class TripServiceShould {
         tripService = new TestableTripService();
     }
 
-    @Test(expected= UserNotLoggedInException.class) public void
-	throw_an_exception_if_the_user_is_not_logged_in() {
+    @Test(expected = UserNotLoggedInException.class)
+    public void
+    throw_an_exception_if_the_user_is_not_logged_in() {
         loggedUser = GUEST;
         tripService.getTripsByUser(UNUSED_USER);
-	}
+    }
 
-    @Test public void
+    @Test
+    public void
     return_the_trips_of_a_friend() {
         someUser.addFriend(loggedUser);
         someUser.addTrip(new Trip());
         assertThat(tripService.getTripsByUser(someUser), is(someUser.trips()));
     }
 
-    @Test public void
+    @Test
+    public void
     return_nothing_if_the_trips_of_a_stranger_is_requested() {
         List<Trip> emptyList = new ArrayList<Trip>();
         userWithNoFriends.addTrip(new Trip());

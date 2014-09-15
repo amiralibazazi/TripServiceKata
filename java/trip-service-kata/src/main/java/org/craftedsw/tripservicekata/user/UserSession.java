@@ -4,11 +4,11 @@ import org.craftedsw.tripservicekata.exception.CollaboratorCallException;
 
 public class UserSession {
 
-	private static final UserSession userSession = new UserSession();
-	
-	private UserSession() {
-	}
-	
+    private static final UserSession userSession = new UserSession();
+
+    public UserSession() {
+    }
+
 	public static UserSession getInstance() {
 		return userSession;
 	}
@@ -17,5 +17,4 @@ public class UserSession {
 		throw new CollaboratorCallException(
 				"UserSession.getLoggedUser() should not be called in an unit test");
 	}
-
 }
