@@ -33,7 +33,12 @@ public class TripServiceShould {
     @Test public void
     return_the_trips_of_a_friend_when_getTripsByUser_is_called() {
         SOME_USER.addFriend(loggedUser);
+        SOME_USER.addTrip(new Trip());
         assertThat(tripService.getTripsByUser(SOME_USER), is(SOME_USER.trips()));
+    }
+
+    @Test public void
+    return_null_if_getTripsByUser_is_called_on_a_user_that_is_not_a_friend() {
     }
 
     private class TestableTripService extends TripService {
