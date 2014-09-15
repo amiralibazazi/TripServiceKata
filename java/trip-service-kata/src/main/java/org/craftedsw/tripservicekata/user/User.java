@@ -9,8 +9,14 @@ public class User {
 
 	private List<Trip> trips = new ArrayList<Trip>();
 	private List<User> friends = new ArrayList<User>();
-	
-	public List<User> getFriends() {
+    private int id;
+
+    public User(int id) {
+
+        this.id = id;
+    }
+
+    public List<User> getFriends() {
 		return friends;
 	}
 	
@@ -26,4 +32,11 @@ public class User {
 		return trips;
 	}
 
+    public boolean isGuest() {
+        return id == 0;
+    }
+
+    public boolean isNotGuest() {
+        return !isGuest();
+    }
 }
