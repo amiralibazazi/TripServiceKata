@@ -15,7 +15,7 @@ public class TripService {
         return (user.isFriend(loggedInUser)) ? getTripsFromDAO(user) : new ArrayList<Trip>();
 	}
 
-    private void validate(User loggedInUser) {
+    private void validate(User loggedInUser) throws UserNotLoggedInException {
         if (loggedInUser==null) {
             throw new UserNotLoggedInException();
         }
