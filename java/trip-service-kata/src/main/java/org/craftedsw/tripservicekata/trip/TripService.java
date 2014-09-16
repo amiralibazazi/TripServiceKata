@@ -9,13 +9,23 @@ import org.craftedsw.tripservicekata.user.UserSession;
 
 public class TripService {
 
-	public List<Trip> getTripsByUser(User user, User loggedInUser) throws UserNotLoggedInException {
+    private final TripDAO tripDAO;
+
+    public TripService(TripDAO tripDAO) {
+        this.tripDAO = tripDAO;
+    }
+
+    public List<Trip> getTripsByUser(User user, User loggedInUser) throws UserNotLoggedInException {
         validate(loggedInUser);
 
         return user.isFriendsWith(loggedInUser)
                 ? getTripsBy(user)
-                : new ArrayList<Trip>();
+                : noTrips();
 	}
+
+    private ArrayList<Trip> noTrips() {
+        return new ArrayList<Trip>();
+    }
 
     private void validate(User loggedInUser) {
         if (loggedInUser == null) {
@@ -23,7 +33,7 @@ public class TripService {
         }
     }
 
-    protected List<Trip> getTripsBy(User user) {
-        return TripDAO.findTripsByUser(user);
+    private List<Trip> getTripsBy(User user) {
+        return tripDAO.tripsBy(user);
     }
 }

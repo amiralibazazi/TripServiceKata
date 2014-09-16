@@ -10,20 +10,15 @@ import java.util.List;
 import static org.craftedsw.tripservicekata.trip.UserBuilder.aUser;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TripServiceShould {
 
-    private static final User GUEST = null;
-    private static final User A_USER = new User();
-    private static final User REGISTERED_USER = new User();
-    private static final User STEVEN = new User();
-    private static final Trip LONDON = new Trip();
-    private static final Trip PARIS = new Trip();
-    private TripService tripService;
-
     @Before
     public void initialise() {
-        tripService = new TestableTripService();
+        tripDAO = mock(TripDAO.class);
+        tripService = new TripService(tripDAO);
     }
 
     @Test(expected= UserNotLoggedInException.class) public void
@@ -49,15 +44,18 @@ public class TripServiceShould {
                             .withTrips(LONDON, PARIS)
                             .build();
 
+        when(tripService.getTripsByUser(friend, REGISTERED_USER))
+                .thenReturn(friend.trips());
         List<Trip> trips = tripService.getTripsByUser(friend, REGISTERED_USER);
         assertThat(trips.size(), is(2));
     }
 
-    private class TestableTripService extends TripService {
-        @Override
-        protected List<Trip> getTripsBy(User user) {
-            return user.trips();
-        }
-    }
-
+    private static final User GUEST = null;
+    private static final User A_USER = new User();
+    private static final User REGISTERED_USER = new User();
+    private static final User STEVEN = new User();
+    private static final Trip LONDON = new Trip();
+    private static final Trip PARIS = new Trip();
+    private TripService tripService;
+    private TripDAO tripDAO;
 }
