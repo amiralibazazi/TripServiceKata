@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static org.craftedsw.tripservicekata.trip.UserBuilder.aUser;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -35,25 +36,23 @@ public class TripServiceShould {
 
     @Test public void
     should_return_no_trips_when_users_are_not_friends() {
-        User stranger = new User();
-        stranger.addFriend(STEVEN);
-        stranger.addTrip(LONDON);
+       User stranger = aUser()
+                            .withFriends(STEVEN)
+                            .withTrips(LONDON)
+                            .build();
 
         List<Trip> trips = tripService.getTripsByUser(stranger);
-
         assertThat(trips.isEmpty(), is(true));
     }
 
     @Test public void
     should_return_trips_when_users_are_friends() {
-        User friend = new User();
-        friend.addFriend(STEVEN);
-        friend.addFriend(loggedInUser);
-        friend.addTrip(LONDON);
-        friend.addTrip(PARIS);
+        User friend = aUser()
+                            .withFriends(STEVEN, loggedInUser)
+                            .withTrips(LONDON, PARIS)
+                            .build();
 
         List<Trip> trips = tripService.getTripsByUser(friend);
-
         assertThat(trips.size(), is(2));
     }
 
@@ -68,4 +67,5 @@ public class TripServiceShould {
             return user.trips();
         }
     }
+
 }
