@@ -8,6 +8,7 @@ import org.craftedsw.tripservicekata.trip.Trip;
 public class User {
 
 	private List<Trip> trips = new ArrayList<Trip>();
+
 	private List<User> friends = new ArrayList<User>();
 	
 	public List<User> getFriends() {
@@ -26,4 +27,7 @@ public class User {
 		return trips;
 	}
 
+    public Boolean isFriendsWith(User user) {
+        return friends.contains(user);
+    }
 }
