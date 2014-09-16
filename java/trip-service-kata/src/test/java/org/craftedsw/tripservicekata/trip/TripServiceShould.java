@@ -44,7 +44,7 @@ public class TripServiceShould {
                             .withTrips(LONDON, PARIS)
                             .build();
 
-        when(tripService.getTripsByUser(friend, REGISTERED_USER))
+        when(tripDAO.tripsBy(friend))
                 .thenReturn(friend.trips());
         List<Trip> trips = tripService.getTripsByUser(friend, REGISTERED_USER);
         assertThat(trips.size(), is(2));
